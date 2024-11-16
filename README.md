@@ -19,6 +19,13 @@ API 서버, MySQL 서버 container들의 설정 파일들을 포함하는 reposi
 
 ## 실행 방법
 
+### 전체 과정
+
+0. 환경 변수 불러오기 (`.env` 파일 읽어서 전부 export 하기)
+```bash
+export $(grep -v '^#' .env | xargs)
+```
+
 1. Docker, Docker Compose 설치하기
 
 ```bash
@@ -37,6 +44,24 @@ chmod +x init-backend.sh init-db.sh
 
 ```bash
 docker-compose up --build
+```
+
+### setup.sh로 한 번에 하기
+
+...를 한 번에 해주는 `setup.sh`를 만들었습니다! 따라서
+
+```bash
+chmod +x setup.sh
+./setup.sh
+```
+
+만 하면 container들 띄우기 완료!
+
+### container들 재시작하기
+
+```bash
+docker-compose down
+./setup.sh
 ```
 
 
