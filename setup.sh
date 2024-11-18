@@ -30,15 +30,9 @@ else
   echo "Docker Compose is already installed."
 fi
 
-# Ensure init-backend.sh and init-db.sh are executable
-chmod +x init-backend.sh init-db.sh
-
-# Run initialization scripts
-echo "Running backend initialization..."
-bash init-backend.sh
-
-echo "Running DB initialization..."
-bash init-db.sh
+# update submodules
+echo "Updating backend submodule..."
+git submodule update --recursive --remote
 
 # Spin up Docker Compose
 echo "Starting Docker Compose..."

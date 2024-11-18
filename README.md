@@ -32,12 +32,10 @@ export $(grep -v '^#' .env | xargs)
 sudo apt update && sudo apt install -y docker.io docker-compose git
 ```
 
-2. `./init-xxx.sh`들 실행하기: backend, db repository들을 각각 `./backend`, `./db`에 clone 해오고 기타 초기 설정을 합니다.
+2. submodule들 update 해오기 (backend, db repository)
 
 ```bash
-chmod +x init-backend.sh init-db.sh
-./init-backend.sh
-./init-db.sh
+git submodule update --recursive --remote
 ```
 
 3. container들 실행하기
