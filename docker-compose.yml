@@ -1,11 +1,25 @@
 services:
+  builder:
+    image: gradle:7.6.0-jdk17
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+    command: ["./gradlew", "clean", "bootJar", "--no-daemon"]
+    # Stop the builder container once the build completes
+    restart: "no"
+    # Prevent `builder` from being run automatically with `docker-compose up`
+    labels:
+      com.docker.compose.oneoff: "true"
+    
   backend:
-    build:
-      context: ./backend
-      dockerfile: ../Dockerfile.backend
-    container_name: spring_boot_server
+    image: eclipse-temurin:17-jre-alpine
+    working_dir: /app
     ports:
       - "8080:8080"
+    volumes:
+      # Mount only the JAR file from the build step
+      - ./backend/build/libs/app.jar:/app/app.jar
+    command: ["java", "-jar", "/app/app.jar"]
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DATABASE}
       SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
