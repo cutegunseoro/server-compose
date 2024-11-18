@@ -33,8 +33,3 @@ fi
 # update submodules
 echo "Updating backend submodule..."
 git submodule update --recursive --remote
-
-# Spin up Docker Compose
-echo "Starting Docker Compose..."
-docker-compose run builder
-docker-compose up --build

@@ -19,7 +19,7 @@ API 서버, MySQL 서버 container들의 설정 파일들을 포함하는 reposi
 
 ## 실행 방법
 
-### 전체 과정
+### 셋업 과정
 
 0. 환경 변수 불러오기 (`.env` 파일 읽어서 전부 export 하기)
 ```bash
@@ -38,28 +38,39 @@ sudo apt update && sudo apt install -y docker.io docker-compose git
 git submodule update --recursive --remote
 ```
 
-3. container들 실행하기
-
-```bash
-docker-compose up --build
-```
-
 ### setup.sh로 한 번에 하기
 
-...를 한 번에 해주는 `setup.sh`를 만들었습니다! 따라서
+여기까지의 과정을 한 번에 해주는 `setup.sh`를 만들었습니다! 따라서
 
 ```bash
 chmod +x setup.sh
 ./setup.sh
 ```
 
-만 하면 container들 띄우기 완료!
+### 컨테이너 실행하기
+
+1. git update & server build 하기
+
+```bash
+git submodule update --recursive --remote
+docker-compose --profile build up
+```
+
+- 필요할 때만 수동으로 하세요!
+
+2. container들 실행하기
+
+```bash
+docker-compose --profile run up
+```
+
+- 한 번 빌드한 상태로 run up 하면 backend, db 컨테이너 바로 시작
 
 ### container들 재시작하기
 
 ```bash
 docker-compose down
-./setup.sh
+docker-compose --profile run up
 ```
 
 
